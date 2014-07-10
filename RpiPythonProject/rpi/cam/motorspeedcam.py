@@ -101,7 +101,7 @@ class FindBallThread(threading.Thread):
 	def run(self):
 		while (True):
 			time.sleep(2)
-			img = Image.open("../cam/picstream/pic.jpg")
+			img = Image.open("../../images/balls/red_ball_1.jpg")
 			
 			width, height = img.size
 			item_size = min(width, height)/item_size_threashold
