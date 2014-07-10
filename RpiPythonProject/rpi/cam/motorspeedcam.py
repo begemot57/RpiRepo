@@ -90,7 +90,7 @@ class DistThread(threading.Thread):
 try:
 	distThread = DistThread()
 	distThread.start()
-	findBallThread = FindBallThread()
+	findBallThread = FindBallThread.FindBallThread()
 	findBallThread.start()
 	while (True):
 		params=raw_input("direction: ").split()

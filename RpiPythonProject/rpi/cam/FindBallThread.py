@@ -8,6 +8,8 @@ import time
 from PIL import Image
 from numpy import array
 
+findBallThread = None
+
 class FindBallThread(threading.Thread):
 
     def run(self):
