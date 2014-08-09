@@ -22,7 +22,7 @@ public class HouseConstructionMonitor {
 		while(true){
 			try {
 				ProcessBuilder pb = new ProcessBuilder("raspistill -o image"+ ++counter+".jpg");				
-				pb.directory(null);
+				pb.directory(new File("/leo/cam/test"));
 				
 				pb.redirectErrorStream(true);
 				p = pb.start();
