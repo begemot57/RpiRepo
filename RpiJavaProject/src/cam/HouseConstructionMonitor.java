@@ -8,6 +8,8 @@ import java.io.OutputStreamWriter;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
+import utils.ZipUtils;
+
 /**
  * This class is meant to create a directory every day. In this directory it
  * will put N pictures taken by the cam. One pic per hour. After all pics are
@@ -29,7 +31,7 @@ public class HouseConstructionMonitor {
 			"HH:mm:ss");
 	private static int[] workingHours = new int[] { 8, 9, 10, 11, 12, 13, 14,
 			15, 16, 17, 18, 22};
-
+	
 	public static void main(String[] args) {
 		HouseConstructionMonitor monitor = new HouseConstructionMonitor();
 		monitor.run();
@@ -75,6 +77,13 @@ public class HouseConstructionMonitor {
 					OutputStream out = p.getOutputStream();
 					bw = new BufferedWriter(new OutputStreamWriter(out));
 				}
+				
+				//zip up all today's pics and send via e-mail
+				String zipFileName = todaysDirName+".zip";
+				ZipUtils appZip = new ZipUtils();
+				appZip.generateFileList(new File(todaysDir.getAbsolutePath()));
+				appZip.zipIt(todaysDir.getAbsolutePath()+"/"+zipFileName);
+				
 				Thread.sleep(30000);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
