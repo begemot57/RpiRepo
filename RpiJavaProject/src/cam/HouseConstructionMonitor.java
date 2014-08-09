@@ -21,7 +21,8 @@ public class HouseConstructionMonitor {
 		int counter = 1;
 		while(true){
 			try {
-				ProcessBuilder pb = new ProcessBuilder("raspistill -o image"+ ++counter+".jpg");				
+//				ProcessBuilder pb = new ProcessBuilder("raspistill -o image"+ ++counter+".jpg");				
+				ProcessBuilder pb = new ProcessBuilder("mkdir bla");				
 				pb.directory(new File("/leo/cam/test"));
 				
 				pb.redirectErrorStream(true);
