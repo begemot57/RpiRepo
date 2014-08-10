@@ -5,9 +5,9 @@ import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.TimeZone;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.AddressException;
@@ -35,8 +35,8 @@ public class HouseConstructionMonitor {
 			"HH:mm:ss");
 	private static final SimpleDateFormat dateTimeFormat = new SimpleDateFormat(
 			"E yyyy.MM.dd HH:mm:ss");
-	private static final int[] workingHours = new int[] { 8, 9, 10, 11, 12, 13, 14,
-			15, 16, 17, 18};
+	private static final int[] workingHours = new int[] { 7, 8, 9, 10, 11, 12, 13, 14,
+			15, 16, 17};
 	
 	// SMTP info
 	private static final String host = "smtp.gmail.com";
@@ -49,6 +49,8 @@ public class HouseConstructionMonitor {
 	private static final String message = "Today's pics are attached.";
     // attachments
 	private static String[] attachFiles = new String[1];
+	//out stream
+	private static PrintWriter out;
 	
 	public static void main(String[] args) {
 		HouseConstructionMonitor monitor = new HouseConstructionMonitor();
@@ -58,26 +60,32 @@ public class HouseConstructionMonitor {
 	public void run() {
 		while (true) {
 			try {
+				//setup out stream
+				cal = Calendar.getInstance();
+				String log_file_name = dateTimeFormat.format(cal.getTime()).replace(" ", "").concat(".log");
+				out = new PrintWriter(new File(log_file_name));
+				
 				// check if today's pic dir is there or create one
 				cal = Calendar.getInstance();
 				String todaysDirName = dateFormat.format(cal.getTime());
 				File todaysDir = new File(picsDir + todaysDirName);
 				if (!todaysDir.exists()) {
 					todaysDir.mkdir();
-					System.out.println("Created today's dir: "+todaysDir.getAbsolutePath());
+					out.write("Created today's dir: "+todaysDir.getAbsolutePath());
+					out.flush();
 				}
 				// check if pic for current hour is there already or it's bad
 				// time to take pic now,
 				// if not take a pic
 				File[] filesInFolder = todaysDir.listFiles();
 				int hoursNow = cal.get(Calendar.HOUR_OF_DAY);
-				System.out.println("hoursNow: "+hoursNow);
 				boolean takePic = false;
 				boolean picAlreadyPresent = false;
 				for (File file : filesInFolder) {
 					if(file.getName().contains("pic" + hoursNow)){
 						picAlreadyPresent = true;
-						System.out.println("Pic for current hour is already present: "+file.getName());
+						out.write("Pic for current hour is already present: "+file.getName());
+						out.flush();
 						break;
 					}
 				}
@@ -85,7 +93,8 @@ public class HouseConstructionMonitor {
 					for (int h : workingHours) {
 						if (hoursNow == h) {
 							takePic = true;
-							System.out.println("Current hour is working hour: "+hoursNow);
+							out.write("Current hour is working hour: "+hoursNow);
+							out.flush();
 							break;
 						}
 					}
@@ -97,9 +106,10 @@ public class HouseConstructionMonitor {
 					pb.directory(new File(todaysDir.getAbsolutePath()));
 					pb.redirectErrorStream(true);
 					p = pb.start();
-					OutputStream out = p.getOutputStream();
-					bw = new BufferedWriter(new OutputStreamWriter(out));
-					System.out.println("Taking pic: "+picName + ".jpg");
+					OutputStream outStream = p.getOutputStream();
+					bw = new BufferedWriter(new OutputStreamWriter(outStream));
+					out.write("Taking pic: "+picName + ".jpg");
+					out.flush();
 				}
 				
 				//zip up all today's pics and send via e-mail
@@ -109,26 +119,35 @@ public class HouseConstructionMonitor {
 					String zipFileName = todaysDirName+".zip";
 					String pathToZip = picsDir+zipFileName;
 					ZipUtils.createZip(pathToZip, todaysDir.getAbsolutePath());
-					System.out.println("Created zip file with pics: "+pathToZip);
+					out.write("Created zip file with pics: "+pathToZip);
+					out.flush();
 			        attachFiles[0] = pathToZip;
 					EmailAttachmentSender.sendEmailWithAttachments(host, port, mailFrom, password, mailTo,
 					        subject+todaysDirName, message, attachFiles);
-					System.out.println("Email sent to "+mailTo);
+					out.write("Email sent to "+mailTo);
+					out.flush();
 				}
 				//sleep for one hour
 				cal = Calendar.getInstance();
-				System.out.println("Go to sleep for one hour at: "+dateTimeFormat.format(cal.getTime()));
+				out.write("Go to sleep for one hour at: "+dateTimeFormat.format(cal.getTime()));
+				out.flush();
 				Thread.sleep(3600000);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			} catch (IOException e) {
-				e.printStackTrace();
+				e.printStackTrace(out);
 			} catch (SecurityException e) {
-				e.printStackTrace();
+				e.printStackTrace(out);
 			} catch (AddressException e) {
-				e.printStackTrace();
+				e.printStackTrace(out);
 			} catch (MessagingException e) {
-				e.printStackTrace();
+				e.printStackTrace(out);
+			} finally {
+				if (out != null) {
+					out.write("Close file");
+					out.flush();
+					out.close();
+				}
 			}
 		}
 	}
