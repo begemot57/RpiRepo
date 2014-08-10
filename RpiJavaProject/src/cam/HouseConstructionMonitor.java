@@ -62,7 +62,7 @@ public class HouseConstructionMonitor {
 		while (true) {
 			try {
 				// check if today's pic dir is there or create one
-				cal = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+				cal = Calendar.getInstance(TimeZone.getTimeZone("Greenwich Mean Time"));
 				String todaysDirName = dateFormat.format(cal.getTime());
 				File todaysDir = new File(picsDir + todaysDirName);
 				if (!todaysDir.exists()) {
@@ -120,7 +120,7 @@ public class HouseConstructionMonitor {
 					System.out.println("Email sent to "+mailTo);
 				}
 				//sleep for one hour
-				cal = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+				cal = Calendar.getInstance(TimeZone.getTimeZone("Greenwich Mean Time"));
 				System.out.println("Go to sleep for one hour at: "+dateTimeFormat.format(cal.getTime()));
 				Thread.sleep(3600000);
 			} catch (InterruptedException e) {
