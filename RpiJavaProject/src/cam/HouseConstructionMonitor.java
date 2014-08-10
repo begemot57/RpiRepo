@@ -28,7 +28,6 @@ public class HouseConstructionMonitor {
 	private static Process p;
 	private static BufferedWriter bw;
 	 private static final String picsDir = "/leo/cam/housemonitor/";
-//	private static String picsDir = "/Users/Leo/git/JavaRepo/JavaTestProject/files/";
 	private static Calendar cal;
 	private static final SimpleDateFormat dateFormat = new SimpleDateFormat(
 			"yyyy.MM.dd");
@@ -36,10 +35,8 @@ public class HouseConstructionMonitor {
 			"HH:mm:ss");
 	private static final SimpleDateFormat dateTimeFormat = new SimpleDateFormat(
 			"E yyyy.MM.dd HH:mm:ss");
-//	private static final int[] workingHours = new int[] { 8, 9, 10, 11, 12, 13, 14,
-//			15, 16, 17, 18, 22};
-	
-	private static final int[] workingHours = new int[] {14};
+	private static final int[] workingHours = new int[] { 8, 9, 10, 11, 12, 13, 14,
+			15, 16, 17, 18};
 	
 	// SMTP info
 	private static final String host = "smtp.gmail.com";
