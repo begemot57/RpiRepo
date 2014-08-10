@@ -39,7 +39,7 @@ public class HouseConstructionMonitor {
 //	private static final int[] workingHours = new int[] { 8, 9, 10, 11, 12, 13, 14,
 //			15, 16, 17, 18, 22};
 	
-	private static final int[] workingHours = new int[] {14};
+	private static final int[] workingHours = new int[] {13};
 	
 	// SMTP info
 	private static final String host = "smtp.gmail.com";
@@ -82,8 +82,6 @@ public class HouseConstructionMonitor {
 					System.out.println("Pic for current hour is already present: "+file.getName());
 					break;
 				}
-				System.out.println("hours now: "+hoursNow);
-				System.out.println("Time Zone: "+cal.getTimeZone().getDisplayName());
 				if (!picAlreadyPresent) {
 					for (int h : workingHours) {
 						if (hoursNow == h) {
