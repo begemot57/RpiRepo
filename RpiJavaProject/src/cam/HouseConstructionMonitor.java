@@ -81,6 +81,7 @@ public class HouseConstructionMonitor {
 					System.out.println("Pic for current hour is already present: "+file.getName());
 					break;
 				}
+				System.out.println("hours now: "+hoursNow);
 				if (!picAlreadyPresent) {
 					for (int h : workingHours) {
 						if (hoursNow == h) {
