@@ -38,7 +38,7 @@ public class HouseConstructionMonitor {
 //	private static final int[] workingHours = new int[] { 8, 9, 10, 11, 12, 13, 14,
 //			15, 16, 17, 18, 22};
 	
-	private static final int[] workingHours = new int[] {13};
+	private static final int[] workingHours = new int[] {14};
 	
 	// SMTP info
 	private static final String host = "smtp.gmail.com";
