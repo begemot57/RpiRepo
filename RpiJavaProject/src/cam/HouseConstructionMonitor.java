@@ -39,7 +39,7 @@ public class HouseConstructionMonitor {
 //	private static final int[] workingHours = new int[] { 8, 9, 10, 11, 12, 13, 14,
 //			15, 16, 17, 18, 22};
 	
-	private static final int[] workingHours = new int[] {13};
+	private static final int[] workingHours = new int[] {14};
 	
 	// SMTP info
 	private static final String host = "smtp.gmail.com";
@@ -108,10 +108,8 @@ public class HouseConstructionMonitor {
 				if(hoursNow==workingHours[workingHours.length-1]){
 					Thread.sleep(10000);
 					String zipFileName = todaysDirName+".zip";
-					ZipUtils appZip = new ZipUtils();
-					appZip.generateFileList(new File(todaysDir.getAbsolutePath()));
-					String pathToZip = todaysDir.getAbsolutePath()+"/"+zipFileName;
-					appZip.zipIt(pathToZip);
+					String pathToZip = picsDir+zipFileName;
+					ZipUtils.createZip(pathToZip, todaysDir.getAbsolutePath());
 					System.out.println("Created zip file with pics: "+pathToZip);
 			        attachFiles[0] = pathToZip;
 					EmailAttachmentSender.sendEmailWithAttachments(host, port, mailFrom, password, mailTo,

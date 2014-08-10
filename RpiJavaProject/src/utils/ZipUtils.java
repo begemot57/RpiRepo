@@ -1,98 +1,86 @@
 package utils;
 
-//Import all needed packages
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
 public class ZipUtils {
 
-	private List<String> fileList;
-	private static String OUTPUT_ZIP_FILE = "Folder.zip";
-	private static String SOURCE_FOLDER = "/Users/Leo/git/JavaRepo/JavaTestProject/files"; 
-
-	public ZipUtils() {
-		fileList = new ArrayList<String>();
-	}
-
 	public static void main(String[] args) {
-		ZipUtils appZip = new ZipUtils();
-		appZip.generateFileList(new File(SOURCE_FOLDER));
-		appZip.zipIt(SOURCE_FOLDER+"/"+OUTPUT_ZIP_FILE);
-	}
-
-	public void zipIt(String zipFile) {
-		byte[] buffer = new byte[1024];
-		String source = "";
-		FileOutputStream fos = null;
-		ZipOutputStream zos = null;
-		try {
-			try {
-				source = SOURCE_FOLDER.substring(
-						SOURCE_FOLDER.lastIndexOf("\\") + 1,
-						SOURCE_FOLDER.length());
-			} catch (Exception e) {
-				source = SOURCE_FOLDER;
-			}
-			fos = new FileOutputStream(zipFile);
-			zos = new ZipOutputStream(fos);
-
-			System.out.println("Output to Zip : " + zipFile);
-			FileInputStream in = null;
-
-			for (String file : this.fileList) {
-				System.out.println("File Added : " + file);
-				ZipEntry ze = new ZipEntry(source + File.separator + file);
-				zos.putNextEntry(ze);
-				try {
-					in = new FileInputStream(SOURCE_FOLDER + File.separator
-							+ file);
-					int len;
-					while ((len = in.read(buffer)) > 0) {
-						zos.write(buffer, 0, len);
-					}
-				} finally {
-					in.close();
-				}
-			}
-
-			zos.closeEntry();
-			System.out.println("Folder successfully compressed");
-
-		} catch (IOException ex) {
-			ex.printStackTrace();
-		} finally {
-			try {
-				zos.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-	}
-
-	public void generateFileList(File node) {
-		this.SOURCE_FOLDER = node.getAbsolutePath();
 		
-		// add file only
-		if (node.isFile()) {
-			fileList.add(generateZipEntry(node.toString()));
+		String zipFile = "/Users/Leo/git/JavaRepo/JavaTestProject/files/archive.zip";
+		
+		String srcDir = "/Users/Leo/git/JavaRepo/JavaTestProject/files";
+		
+		createZip(zipFile, srcDir);
+		
+	}
+	
+	public static void createZip(String zipFile, String srcDir){
+		try {
 
+			FileOutputStream fos = new FileOutputStream(zipFile);
+
+			ZipOutputStream zos = new ZipOutputStream(fos);
+			
+			File srcFile = new File(srcDir);
+			
+			addDirToArchive(zos, srcFile);
+
+			// close the ZipOutputStream
+			zos.close();
+			
 		}
+		catch (IOException ioe) {
+			System.out.println("Error creating zip file: " + ioe);
+		}
+	}
+	
+	private static void addDirToArchive(ZipOutputStream zos, File srcFile) {
 
-		if (node.isDirectory()) {
-			String[] subNote = node.list();
-			for (String filename : subNote) {
-				generateFileList(new File(node, filename));
+		File[] files = srcFile.listFiles();
+
+		System.out.println("Adding directory: " + srcFile.getName());
+
+		for (int i = 0; i < files.length; i++) {
+			
+			// if the file is directory, use recursion
+			if (files[i].isDirectory()) {
+				addDirToArchive(zos, files[i]);
+				continue;
 			}
+
+			try {
+				
+				System.out.println("tAdding file: " + files[i].getName());
+
+				// create byte buffer
+				byte[] buffer = new byte[1024];
+
+				FileInputStream fis = new FileInputStream(files[i]);
+
+				zos.putNextEntry(new ZipEntry(files[i].getName()));
+				
+				int length;
+
+				while ((length = fis.read(buffer)) > 0) {
+					zos.write(buffer, 0, length);
+				}
+
+				zos.closeEntry();
+
+				// close the InputStream
+				fis.close();
+
+			} catch (IOException ioe) {
+				System.out.println("IOException :" + ioe);
+			}
+			
 		}
+
 	}
 
-	private String generateZipEntry(String file) {
-		return file.substring(SOURCE_FOLDER.length() + 1, file.length());
-	}
 }
