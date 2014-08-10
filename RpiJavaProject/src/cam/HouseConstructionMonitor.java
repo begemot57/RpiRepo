@@ -83,6 +83,7 @@ public class HouseConstructionMonitor {
 					break;
 				}
 				System.out.println("hours now: "+hoursNow);
+				System.out.println("Time Zone: "+cal.getTimeZone().getDisplayName());
 				if (!picAlreadyPresent) {
 					for (int h : workingHours) {
 						if (hoursNow == h) {
