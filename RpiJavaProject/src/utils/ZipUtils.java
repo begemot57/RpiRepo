@@ -13,8 +13,8 @@ import java.util.zip.ZipOutputStream;
 public class ZipUtils {
 
 	private List<String> fileList;
-	private static final String OUTPUT_ZIP_FILE = "Folder.zip";
-	private static final String SOURCE_FOLDER = "/Users/Leo/git/JavaRepo/JavaTestProject/files"; 
+	private static String OUTPUT_ZIP_FILE = "Folder.zip";
+	private static String SOURCE_FOLDER = "/Users/Leo/git/JavaRepo/JavaTestProject/files"; 
 
 	public ZipUtils() {
 		fileList = new ArrayList<String>();
@@ -76,7 +76,8 @@ public class ZipUtils {
 	}
 
 	public void generateFileList(File node) {
-
+		this.SOURCE_FOLDER = node.getAbsolutePath();
+		
 		// add file only
 		if (node.isFile()) {
 			fileList.add(generateZipEntry(node.toString()));
