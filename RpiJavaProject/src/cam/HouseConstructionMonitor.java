@@ -62,7 +62,7 @@ public class HouseConstructionMonitor {
 		while (true) {
 			try {
 				// check if today's pic dir is there or create one
-				cal = Calendar.getInstance(TimeZone.getTimeZone("Greenwich Mean Time"));
+				cal = Calendar.getInstance();
 				String todaysDirName = dateFormat.format(cal.getTime());
 				File todaysDir = new File(picsDir + todaysDirName);
 				if (!todaysDir.exists()) {
@@ -74,6 +74,7 @@ public class HouseConstructionMonitor {
 				// if not take a pic
 				File[] filesInFolder = todaysDir.listFiles();
 				int hoursNow = cal.get(Calendar.HOUR_OF_DAY);
+				System.out.println("hoursNow: "+hoursNow);
 				boolean takePic = false;
 				boolean picAlreadyPresent = false;
 				for (File file : filesInFolder) {
@@ -117,7 +118,7 @@ public class HouseConstructionMonitor {
 					System.out.println("Email sent to "+mailTo);
 				}
 				//sleep for one hour
-				cal = Calendar.getInstance(TimeZone.getTimeZone("Greenwich Mean Time"));
+				cal = Calendar.getInstance();
 				System.out.println("Go to sleep for one hour at: "+dateTimeFormat.format(cal.getTime()));
 				Thread.sleep(3600000);
 			} catch (InterruptedException e) {

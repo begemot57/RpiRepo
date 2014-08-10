@@ -43,7 +43,7 @@ public class ZipUtils {
 
 		File[] files = srcFile.listFiles();
 
-		System.out.println("Adding directory: " + srcFile.getName());
+//		System.out.println("Adding directory: " + srcFile.getName());
 
 		for (int i = 0; i < files.length; i++) {
 			
@@ -55,7 +55,7 @@ public class ZipUtils {
 
 			try {
 				
-				System.out.println("tAdding file: " + files[i].getName());
+//				System.out.println("Adding file: " + files[i].getName());
 
 				// create byte buffer
 				byte[] buffer = new byte[1024];
