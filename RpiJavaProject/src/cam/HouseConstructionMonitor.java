@@ -92,8 +92,8 @@ public class HouseConstructionMonitor {
 				}
 				if (takePic) {
 					String picName = "pic" + timeFormat.format(cal.getTime());
-					ProcessBuilder pb = new ProcessBuilder("raspistill", "-o",
-							picName + ".jpg");
+					ProcessBuilder pb = new ProcessBuilder(
+							"raspistill", "-w", "800", "-h", "600", "-o", picName + ".jpg");
 					pb.directory(new File(todaysDir.getAbsolutePath()));
 					pb.redirectErrorStream(true);
 					p = pb.start();
