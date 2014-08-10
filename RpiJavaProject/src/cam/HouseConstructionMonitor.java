@@ -78,10 +78,11 @@ public class HouseConstructionMonitor {
 				boolean takePic = false;
 				boolean picAlreadyPresent = false;
 				for (File file : filesInFolder) {
-					file.getName().contains("pic" + hoursNow);
-					picAlreadyPresent = true;
-					System.out.println("Pic for current hour is already present: "+file.getName());
-					break;
+					if(file.getName().contains("pic" + hoursNow)){
+						picAlreadyPresent = true;
+						System.out.println("Pic for current hour is already present: "+file.getName());
+						break;
+					}
 				}
 				if (!picAlreadyPresent) {
 					for (int h : workingHours) {
