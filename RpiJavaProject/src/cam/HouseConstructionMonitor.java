@@ -34,7 +34,7 @@ public class HouseConstructionMonitor {
 	private static final SimpleDateFormat timeFormat = new SimpleDateFormat(
 			"HH:mm:ss");
 	private static final SimpleDateFormat dateTimeFormat = new SimpleDateFormat(
-			"E yyyy.MM.dd at HH:mm:ss");
+			"E yyyy.MM.dd 'at' HH:mm:ss");
 	private static final int[] workingHours = new int[] { 7, 8, 9, 10, 11, 12, 13, 14,
 			15, 16, 17};
 	
