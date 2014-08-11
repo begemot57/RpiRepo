@@ -34,7 +34,7 @@ public class HouseConstructionMonitor {
 	private static final SimpleDateFormat timeFormat = new SimpleDateFormat(
 			"HH:mm:ss");
 	private static final SimpleDateFormat dateTimeFormat = new SimpleDateFormat(
-			"E yyyy.MM.dd HH:mm:ss");
+			"E yyyy.MM.dd at HH:mm:ss");
 	private static final int[] workingHours = new int[] { 7, 8, 9, 10, 11, 12, 13, 14,
 			15, 16, 17};
 	
@@ -71,7 +71,7 @@ public class HouseConstructionMonitor {
 				File todaysDir = new File(picsDir + todaysDirName);
 				if (!todaysDir.exists()) {
 					todaysDir.mkdir();
-					out.write("Created today's dir: "+todaysDir.getAbsolutePath());
+					out.write("Created today's dir: "+todaysDir.getAbsolutePath()+"\n");
 					out.flush();
 				}
 				// check if pic for current hour is there already or it's bad
@@ -84,7 +84,7 @@ public class HouseConstructionMonitor {
 				for (File file : filesInFolder) {
 					if(file.getName().contains("pic" + hoursNow)){
 						picAlreadyPresent = true;
-						out.write("Pic for current hour is already present: "+file.getName());
+						out.write("Pic for current hour is already present: "+file.getName()+"\n");
 						out.flush();
 						break;
 					}
@@ -93,7 +93,7 @@ public class HouseConstructionMonitor {
 					for (int h : workingHours) {
 						if (hoursNow == h) {
 							takePic = true;
-							out.write("Current hour is working hour: "+hoursNow);
+							out.write("Current hour is working hour: "+hoursNow+"\n");
 							out.flush();
 							break;
 						}
@@ -108,7 +108,7 @@ public class HouseConstructionMonitor {
 					p = pb.start();
 					OutputStream outStream = p.getOutputStream();
 					bw = new BufferedWriter(new OutputStreamWriter(outStream));
-					out.write("Taking pic: "+picName + ".jpg");
+					out.write("Taking pic: "+picName + ".jpg"+"\n");
 					out.flush();
 				}
 				
@@ -119,17 +119,17 @@ public class HouseConstructionMonitor {
 					String zipFileName = todaysDirName+".zip";
 					String pathToZip = picsDir+zipFileName;
 					ZipUtils.createZip(pathToZip, todaysDir.getAbsolutePath());
-					out.write("Created zip file with pics: "+pathToZip);
+					out.write("Created zip file with pics: "+pathToZip+"\n");
 					out.flush();
 			        attachFiles[0] = pathToZip;
 					EmailAttachmentSender.sendEmailWithAttachments(host, port, mailFrom, password, mailTo,
 					        subject+todaysDirName, message, attachFiles);
-					out.write("Email sent to "+mailTo);
+					out.write("Email sent to "+mailTo+"\n");
 					out.flush();
 				}
 				//sleep for one hour
 				cal = Calendar.getInstance();
-				out.write("Go to sleep for one hour at: "+dateTimeFormat.format(cal.getTime()));
+				out.write("Go to sleep for one hour at: "+dateTimeFormat.format(cal.getTime())+"\n");
 				out.flush();
 				Thread.sleep(3600000);
 			} catch (InterruptedException e) {
