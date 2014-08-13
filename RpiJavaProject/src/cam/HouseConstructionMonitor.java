@@ -62,7 +62,7 @@ public class HouseConstructionMonitor {
 	public void run() {
 		try {
 			// setup out stream
-			cal = Calendar.getInstance(TimeZone.getTimeZone("Eire"));
+			cal = Calendar.getInstance();
 			String log_file_name = dateTimeFormat.format(cal.getTime())
 					.replace(" ", "").concat(".log");
 			out = new PrintWriter(new File(log_file_name));
@@ -138,7 +138,7 @@ public class HouseConstructionMonitor {
 					out.flush();
 				}
 				// sleep for one hour
-				cal = Calendar.getInstance(TimeZone.getTimeZone("Eire"));
+				cal = Calendar.getInstance();
 				out.write("Go to sleep for one hour at: "
 						+ dateTimeFormat.format(cal.getTime()) + "\n");
 				out.flush();
