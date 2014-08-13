@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.lang.management.ManagementFactory;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
@@ -64,6 +65,9 @@ public class HouseConstructionMonitor {
 			String log_file_name = dateTimeFormat.format(cal.getTime())
 					.replace(" ", "").concat(".log");
 			out = new PrintWriter(new File(log_file_name));
+			String processId = ManagementFactory.getRuntimeMXBean().getName();
+			out.write("Current process id: "+processId+"\n");
+			out.flush();
 			while (true) {
 
 				// check if today's pic dir is there or create one
