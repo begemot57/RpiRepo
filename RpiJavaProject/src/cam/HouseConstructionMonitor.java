@@ -9,6 +9,7 @@ import java.io.PrintWriter;
 import java.lang.management.ManagementFactory;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.TimeZone;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.AddressException;
@@ -61,7 +62,7 @@ public class HouseConstructionMonitor {
 	public void run() {
 		try {
 			// setup out stream
-			cal = Calendar.getInstance();
+			cal = Calendar.getInstance(TimeZone.getTimeZone("Eire"));
 			String log_file_name = dateTimeFormat.format(cal.getTime())
 					.replace(" ", "").concat(".log");
 			out = new PrintWriter(new File(log_file_name));
@@ -71,7 +72,7 @@ public class HouseConstructionMonitor {
 			while (true) {
 
 				// check if today's pic dir is there or create one
-				cal = Calendar.getInstance();
+				cal = Calendar.getInstance(TimeZone.getTimeZone("Eire"));
 				String todaysDirName = dateFormat.format(cal.getTime());
 				File todaysDir = new File(picsDir + todaysDirName);
 				if (!todaysDir.exists()) {
@@ -137,7 +138,7 @@ public class HouseConstructionMonitor {
 					out.flush();
 				}
 				// sleep for one hour
-				cal = Calendar.getInstance();
+				cal = Calendar.getInstance(TimeZone.getTimeZone("Eire"));
 				out.write("Go to sleep for one hour at: "
 						+ dateTimeFormat.format(cal.getTime()) + "\n");
 				out.flush();
