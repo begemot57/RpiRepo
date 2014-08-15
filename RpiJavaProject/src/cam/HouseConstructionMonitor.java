@@ -87,7 +87,7 @@ public class HouseConstructionMonitor {
 				String picHour;
 				for (File file : filesInFolder) {
 					//pic name has this format "20140815_1252" we extract hous here
-					picHour = file.getName().substring(file.getName().length()-4, file.getName().length()-2);
+					picHour = file.getName().substring(file.getName().length()-8, file.getName().length()-6);
 					if (picHour.equals(Integer.toString(hoursNow))) {
 						picAlreadyPresent = true;
 						out.write("Pic for current hour is already present: "
