@@ -32,10 +32,12 @@ public class HouseConstructionMonitor {
 	private static Calendar cal;
 	private static final SimpleDateFormat dateFormat = new SimpleDateFormat(
 			"yyyy.MM.dd");
+	private static final SimpleDateFormat dateTimeFormat = new SimpleDateFormat(
+			"E yyyy.MM.dd 'at' HH:mm:ss");
 	private static final SimpleDateFormat numbersOnlyFormat = new SimpleDateFormat(
 			"yyyyMMdd'_'HHmm");
 	private static final int[] workingHours = new int[] { 8, 9, 10, 11, 12,
-			13, 14, 15, 16, 17, 18, 19 };
+			13, 14, 15, 16, 17, 18 };
 
 	// SMTP info
 	private static final String host = "smtp.gmail.com";
@@ -139,7 +141,7 @@ public class HouseConstructionMonitor {
 				// sleep for one hour
 				cal = Calendar.getInstance();
 				out.write("Go to sleep for one hour at: "
-						+ numbersOnlyFormat.format(cal.getTime()) + "\n");
+						+ dateTimeFormat.format(cal.getTime()) + "\n");
 				out.flush();
 				Thread.sleep(3600000);
 			}
