@@ -37,6 +37,8 @@ public class HouseConstructionMonitor {
 			"HH:mm:ss");
 	private static final SimpleDateFormat dateTimeFormat = new SimpleDateFormat(
 			"E yyyy.MM.dd 'at' HH:mm:ss");
+	private static final SimpleDateFormat numbersOnlyFormat = new SimpleDateFormat(
+			"yyyyMMdd'_'HHmm");
 	private static final int[] workingHours = new int[] { 8, 9, 10, 11, 12,
 			13, 14, 15, 16, 17, 18 };
 
@@ -88,8 +90,11 @@ public class HouseConstructionMonitor {
 				int hoursNow = cal.get(Calendar.HOUR_OF_DAY);
 				boolean takePic = false;
 				boolean picAlreadyPresent = false;
+				String picHour;
 				for (File file : filesInFolder) {
-					if (file.getName().contains("pic" + hoursNow)) {
+					//pic name has this format "20140815_1252" we extract hous here
+					picHour = file.getName().substring(file.getName().length()-4, file.getName().length()-2);
+					if (picHour.equals(Integer.toString(hoursNow))) {
 						picAlreadyPresent = true;
 						out.write("Pic for current hour is already present: "
 								+ file.getName() + "\n");
@@ -109,7 +114,7 @@ public class HouseConstructionMonitor {
 					}
 				}
 				if (takePic) {
-					String picName = "pic" + timeFormat.format(cal.getTime());
+					String picName = numbersOnlyFormat.format(cal.getTime());
 					ProcessBuilder pb = new ProcessBuilder("raspistill", "-w",
 							"800", "-h", "600", "-o", picName + ".jpg");
 					pb.directory(new File(todaysDir.getAbsolutePath()));
