@@ -36,8 +36,8 @@ public class HouseConstructionMonitor {
 			"E yyyy.MM.dd 'at' HH:mm:ss");
 	private static final SimpleDateFormat numbersOnlyFormat = new SimpleDateFormat(
 			"yyyyMMdd'_'HHmm");
-	private static final int[] workingHours = new int[] { 8, 9, 10, 11, 12,
-			13, 14, 15, 16, 17, 18 };
+	private static final int[] workingHours = new int[] { 8, 9, 10, 11, 12, 13,
+			14, 15, 16, 17, 18 };
 
 	// SMTP info
 	private static final String host = "smtp.gmail.com";
@@ -62,81 +62,92 @@ public class HouseConstructionMonitor {
 		try {
 			// setup out stream
 			cal = Calendar.getInstance();
-			String log_file_name = numbersOnlyFormat.format(cal.getTime()).concat(".log");
+			String log_file_name = numbersOnlyFormat.format(cal.getTime())
+					.concat(".log");
 			out = new PrintWriter(new File(log_file_name));
 			String processId = ManagementFactory.getRuntimeMXBean().getName();
-			out.write("Current process id: "+processId+"\n");
+			out.write("Current process id: " + processId + "\n");
 			out.flush();
 			while (true) {
-
-				// check if today's pic dir is there or create one
-				cal = Calendar.getInstance();
-				String todaysDirName = dateFormat.format(cal.getTime());
-				File todaysDir = new File(picsDir + todaysDirName);
-				if (!todaysDir.exists()) {
-					todaysDir.mkdir();
-					out.write("Created today's dir: "
-							+ todaysDir.getAbsolutePath() + "\n");
-					out.flush();
-				}
-				// check if pic for current hour is there already or it's bad
-				// time to take pic now,
-				// if not take a pic
-				File[] filesInFolder = todaysDir.listFiles();
+				// check if current hour is working hour
+				boolean isWorkingHourNow = false;
 				int hoursNow = cal.get(Calendar.HOUR_OF_DAY);
-				boolean takePic = false;
-				boolean picAlreadyPresent = false;
-				String picHour;
-				for (File file : filesInFolder) {
-					//pic name has this format "20140815_1252" we extract hous here
-					picHour = file.getName().substring(file.getName().length()-8, file.getName().length()-6);
-					if (picHour.equals(Integer.toString(hoursNow))) {
-						picAlreadyPresent = true;
-						out.write("Pic for current hour is already present: "
-								+ file.getName() + "\n");
+				for (int h : workingHours) {
+					if (hoursNow == h) {
+						isWorkingHourNow = true;
+						out.write("Current hour is working hour: " + hoursNow
+								+ "\n");
 						out.flush();
 						break;
 					}
 				}
-				if (!picAlreadyPresent) {
-					for (int h : workingHours) {
-						if (hoursNow == h) {
+
+				if (isWorkingHourNow) {
+					// check if today's pic dir is there or create one
+					cal = Calendar.getInstance();
+					String todaysDirName = dateFormat.format(cal.getTime());
+					File todaysDir = new File(picsDir + todaysDirName);
+					if (!todaysDir.exists()) {
+						todaysDir.mkdir();
+						out.write("Created today's dir: "
+								+ todaysDir.getAbsolutePath() + "\n");
+						out.flush();
+					}
+					// check if pic for current hour is there already or it's
+					// bad
+					// time to take pic now,
+					// if not take a pic
+					File[] filesInFolder = todaysDir.listFiles();
+					boolean takePic = false;
+					String picHour;
+					for (File file : filesInFolder) {
+						// pic name has this format "20140815_1252" we extract
+						// hous here
+						picHour = file.getName().substring(
+								file.getName().length() - 8,
+								file.getName().length() - 6);
+						if (picHour.equals(Integer.toString(hoursNow))) {
 							takePic = true;
-							out.write("Current hour is working hour: "
-									+ hoursNow + "\n");
+							out.write("Pic for current hour is already present: "
+									+ file.getName() + "\n");
 							out.flush();
 							break;
 						}
 					}
-				}
-				if (takePic) {
-					String picName = numbersOnlyFormat.format(cal.getTime());
-					ProcessBuilder pb = new ProcessBuilder("raspistill", "-w",
-							"800", "-h", "600", "-o", picName + ".jpg");
-					pb.directory(new File(todaysDir.getAbsolutePath()));
-					pb.redirectErrorStream(true);
-					p = pb.start();
-					OutputStream outStream = p.getOutputStream();
-					bw = new BufferedWriter(new OutputStreamWriter(outStream));
-					out.write("Taking pic: " + picName + ".jpg" + "\n");
-					out.flush();
-				}
+					if (takePic) {
+						String picName = numbersOnlyFormat
+								.format(cal.getTime());
+						ProcessBuilder pb = new ProcessBuilder("raspistill",
+								"-w", "800", "-h", "600", "-o", picName
+										+ ".jpg");
+						pb.directory(new File(todaysDir.getAbsolutePath()));
+						pb.redirectErrorStream(true);
+						p = pb.start();
+						OutputStream outStream = p.getOutputStream();
+						bw = new BufferedWriter(new OutputStreamWriter(
+								outStream));
+						out.write("Taking pic: " + picName + ".jpg" + "\n");
+						out.flush();
+					}
 
-				// zip up all today's pics and send via e-mail
-				// need to sleep first before last taken pic goes in
-				if (hoursNow == workingHours[workingHours.length - 1]) {
-					Thread.sleep(10000);
-					String zipFileName = todaysDirName + ".zip";
-					String pathToZip = picsDir + zipFileName;
-					ZipUtils.createZip(pathToZip, todaysDir.getAbsolutePath());
-					out.write("Created zip file with pics: " + pathToZip + "\n");
-					out.flush();
-					attachFiles[0] = pathToZip;
-					EmailAttachmentSender.sendEmailWithAttachments(host, port,
-							mailFrom, password, mailTo,
-							subject + todaysDirName, message, attachFiles);
-					out.write("Email sent to " + mailTo + "\n");
-					out.flush();
+					// zip up all today's pics and send via e-mail
+					// need to sleep first before last taken pic goes in
+					if (hoursNow == workingHours[workingHours.length - 1]) {
+						Thread.sleep(10000);
+						String zipFileName = todaysDirName + ".zip";
+						String pathToZip = picsDir + zipFileName;
+						ZipUtils.createZip(pathToZip,
+								todaysDir.getAbsolutePath());
+						out.write("Created zip file with pics: " + pathToZip
+								+ "\n");
+						out.flush();
+						attachFiles[0] = pathToZip;
+						EmailAttachmentSender.sendEmailWithAttachments(host,
+								port, mailFrom, password, mailTo, subject
+										+ todaysDirName, message, attachFiles);
+						out.write("Email sent to " + mailTo + "\n");
+						out.flush();
+					}
 				}
 				// sleep for one hour
 				cal = Calendar.getInstance();
