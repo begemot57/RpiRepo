@@ -35,7 +35,7 @@ public class HouseConstructionMonitor {
 	private static final SimpleDateFormat numbersOnlyFormat = new SimpleDateFormat(
 			"yyyyMMdd'_'HHmm");
 	private static final int[] workingHours = new int[] { 8, 9, 10, 11, 12,
-			13, 14, 15, 16, 17, 18 };
+			13, 14, 15, 16, 17, 18, 19 };
 
 	// SMTP info
 	private static final String host = "smtp.gmail.com";
