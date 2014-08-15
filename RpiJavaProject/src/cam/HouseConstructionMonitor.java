@@ -9,7 +9,6 @@ import java.io.PrintWriter;
 import java.lang.management.ManagementFactory;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.TimeZone;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.AddressException;
@@ -33,10 +32,6 @@ public class HouseConstructionMonitor {
 	private static Calendar cal;
 	private static final SimpleDateFormat dateFormat = new SimpleDateFormat(
 			"yyyy.MM.dd");
-	private static final SimpleDateFormat timeFormat = new SimpleDateFormat(
-			"HH:mm:ss");
-	private static final SimpleDateFormat dateTimeFormat = new SimpleDateFormat(
-			"E yyyy.MM.dd 'at' HH:mm:ss");
 	private static final SimpleDateFormat numbersOnlyFormat = new SimpleDateFormat(
 			"yyyyMMdd'_'HHmm");
 	private static final int[] workingHours = new int[] { 8, 9, 10, 11, 12,
@@ -65,8 +60,7 @@ public class HouseConstructionMonitor {
 		try {
 			// setup out stream
 			cal = Calendar.getInstance();
-			String log_file_name = dateTimeFormat.format(cal.getTime())
-					.replace(" ", "").concat(".log");
+			String log_file_name = numbersOnlyFormat.format(cal.getTime()).concat(".log");
 			out = new PrintWriter(new File(log_file_name));
 			String processId = ManagementFactory.getRuntimeMXBean().getName();
 			out.write("Current process id: "+processId+"\n");
@@ -74,7 +68,7 @@ public class HouseConstructionMonitor {
 			while (true) {
 
 				// check if today's pic dir is there or create one
-				cal = Calendar.getInstance(TimeZone.getTimeZone("Eire"));
+				cal = Calendar.getInstance();
 				String todaysDirName = dateFormat.format(cal.getTime());
 				File todaysDir = new File(picsDir + todaysDirName);
 				if (!todaysDir.exists()) {
@@ -145,7 +139,7 @@ public class HouseConstructionMonitor {
 				// sleep for one hour
 				cal = Calendar.getInstance();
 				out.write("Go to sleep for one hour at: "
-						+ dateTimeFormat.format(cal.getTime()) + "\n");
+						+ numbersOnlyFormat.format(cal.getTime()) + "\n");
 				out.flush();
 				Thread.sleep(3600000);
 			}
