@@ -3,7 +3,7 @@
 # Access this URL to see the stream: http://begemot57.ddns.net:8090/stream.html
 
 function start(){
-	if "$(ls -A /leo/cam/picstream)" ; then
+	if ls -A /leo/cam/picstream ; then
 		echo "delete old pic.jpg"
 		rm /leo/cam/picstream/*
 	fi
