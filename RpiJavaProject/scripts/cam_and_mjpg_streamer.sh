@@ -6,14 +6,14 @@ function start(){
 	echo "delete old pic.jpg"
 	rm /leo/cam/picstream/*
 	
-	if [$(pidof raspistill | wc -w) == "0"]; then
+	if [$(pidof raspistill | wc -w) -eq 0]; then
 		echo "start raspistill into /leo/cam/picstream/pic.jpg"
 		raspistill --nopreview -w 640 -h 480 -q 5 -o /leo/cam/picstream/pic.jpg -tl 100 -t 9999999 -th 0:0:0 > /dev/null 2>&1 &
 	else
 		echo "raspistill is already running"
 	fi
 	
-	if [$(pidof mjpg_streamer | wc -w) == "0"]; then
+	if [$(pidof mjpg_streamer | wc -w) -eq 0]; then
 		echo "start mjpg_streamer"
 		LD_LIBRARY_PATH=/usr/local/lib mjpg_streamer -i "input_file.so -f /leo/cam/picstream -n pic.jpg" -o "output_http.so -w /usr/local/www -p 8090" > /dev/null 2>&1 &
 	else
