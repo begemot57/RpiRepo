@@ -6,6 +6,9 @@ function start(){
 	echo "delete old pic.jpg"
 	rm /leo/cam/picstream/*
 	
+	echo "$(pidof raspistill | wc -w):"
+	echo $(pidof raspistill | wc -w)
+	
 	if[$(pidof raspistill | wc -w) == 0]; then
 		echo "start raspistill into /leo/cam/picstream/pic.jpg"
 		raspistill --nopreview -w 640 -h 480 -q 5 -o /leo/cam/picstream/pic.jpg -tl 100 -t 9999999 -th 0:0:0 > /dev/null 2>&1 &
