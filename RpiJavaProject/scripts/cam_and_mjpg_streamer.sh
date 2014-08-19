@@ -3,9 +3,11 @@
 # Access this URL to see the stream: http://begemot57.ddns.net:8090/stream.html
 
 function start(){
-	echo "delete old pic.jpg"
-	rm /leo/cam/picstream/*
-	
+	if "$(ls -A /leo/cam/picstream)" ; then
+		echo "delete old pic.jpg"
+		rm /leo/cam/picstream/*
+	fi
+
 	if ! pidof -x raspistill > /dev/null; then
 		echo "start raspistill into /leo/cam/picstream/pic.jpg"
 		raspistill --nopreview -w 640 -h 480 -q 5 -o /leo/cam/picstream/pic.jpg -tl 100 -t 9999999 -th 0:0:0 > /dev/null 2>&1 &
