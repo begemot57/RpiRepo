@@ -9,10 +9,10 @@ fi
 
 if [ $1 == "stop" ]; then
 	echo "stop it"
-	start
+	stop
 fi
 
-function start{
+function start(){
 	echo "delete old pic.jpg"
 	rm /leo/cam/picstream/*
 	
@@ -23,7 +23,7 @@ function start{
 	LD_LIBRARY_PATH=/usr/local/lib mjpg_streamer -i "input_file.so -f /leo/cam/picstream -n pic.jpg" -o "output_http.so -w /usr/local/www -p 8090" &
 }
 
-function stop{
+function stop(){
 	echo "killing raspistill"
 	pkill raspistill
 	
