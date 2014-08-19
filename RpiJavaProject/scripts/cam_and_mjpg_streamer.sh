@@ -30,8 +30,10 @@ function stop(){
 	echo "killing mjpg_streamer"
 	pkill mjpg_streamer
 	
-	echo "delete old pic.jpg"
-	rm /leo/cam/picstream/*
+	if ! ls -A /leo/cam/picstream > /dev/null; then
+		echo "delete old pic.jpg"
+		rm /leo/cam/picstream/*
+	fi
 }
 
 if [ $1 == "start" ]; then
