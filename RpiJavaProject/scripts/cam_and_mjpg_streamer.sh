@@ -2,16 +2,6 @@
 # This will remove old pic.jpg, start cam, and start mjpg_streamer server
 # Access this URL to see the stream: http://begemot57.ddns.net:8090/stream.html
 
-if [ $1 == "start" ]; then
-	echo "start it"
-	start
-fi
-
-if [ $1 == "stop" ]; then
-	echo "stop it"
-	stop
-fi
-
 function start(){
 	echo "delete old pic.jpg"
 	rm /leo/cam/picstream/*
@@ -33,3 +23,13 @@ function stop(){
 	echo "delete old pic.jpg"
 	rm /leo/cam/picstream/*
 }
+
+if [ $1 == "start" ]; then
+	echo "start it"
+	start
+fi
+
+if [ $1 == "stop" ]; then
+	echo "stop it"
+	stop
+fi
