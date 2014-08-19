@@ -1,6 +1,7 @@
 #!/bin/bash
 # This will remove old pic.jpg, start cam, and start mjpg_streamer server
 # Access this URL to see the stream: http://begemot57.ddns.net:8090/stream.html
+# To run go: ./cam_and_mjpg_streamer.sh start/stop
 
 function start(){
 	if ! ls -A /leo/cam/picstream > /dev/null; then
