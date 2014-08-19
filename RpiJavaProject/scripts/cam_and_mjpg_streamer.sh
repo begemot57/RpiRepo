@@ -33,3 +33,5 @@ if [ $1 == "stop" ]; then
 	echo "stop it"
 	stop
 fi
+
+exit
