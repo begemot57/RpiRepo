@@ -12,14 +12,15 @@ public class CamAndMjpgStreamer {
 	
 	private static BufferedWriter bw;
 	ProcessBuilder pb;
-	private static final String script = "/leo/git/RpiRepo/RpiJavaProject/scripts/cam_and_mjpg_streamer.sh";
+	private static final String scriptDir = "/leo/git/RpiRepo/RpiJavaProject/scripts";
+	private static final String scriptName = "/cam_and_mjpg_streamer.sh";
 	// out stream
 	private static PrintWriter out;
 	
 	public CamAndMjpgStreamer(){
 		try {
 			out = new PrintWriter(new File("streamer.log"));
-			out.write("CamAndMjpgStreamer initialized");
+			out.write("CamAndMjpgStreamer initialized\n");
 			out.flush();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace(out);
@@ -28,20 +29,21 @@ public class CamAndMjpgStreamer {
 	}
 	
 	public void start() {
-		out.write("start pic stream and server");
+		out.write("start pic stream and server\n");
 		out.flush();
 		execute("start");
 	}
 	
 	public void stop(){
-		out.write("stop pic stream and server");
+		out.write("stop pic stream and server\n");
 		execute("stop");
 	}
 
 	void execute(String action){
 		try {
 			if(bw == null){
-				ProcessBuilder pb = new ProcessBuilder(script, action);
+				ProcessBuilder pb = new ProcessBuilder(scriptName, action);
+				pb.directory(new File(scriptDir));
 				pb.redirectErrorStream(true);
 				Process p = pb.start();
 				OutputStream out = p.getOutputStream();
@@ -52,7 +54,7 @@ public class CamAndMjpgStreamer {
 			out.flush();
 		} finally {
 			if (out != null) {
-				out.write("Close file");
+				out.write("Close file\n");
 				out.flush();
 				out.close();
 			}
