@@ -48,7 +48,7 @@ public class CamAndMjpgStreamer {
 				pb = new ProcessBuilder(scriptName, action);
 				pb.directory(new File(scriptDir));
 				pb.redirectErrorStream(true);
-				pb.redirectInput(logFile);
+//				pb.redirectInput(logFile);
 				Process p = pb.start();
 //				OutputStream pbOut = p.getOutputStream();
 //				bw = new BufferedWriter(new OutputStreamWriter(pbOut));
