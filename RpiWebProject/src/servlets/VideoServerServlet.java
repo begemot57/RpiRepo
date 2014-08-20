@@ -30,9 +30,8 @@ public class VideoServerServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		CamAndMjpgStreamer streamer = new CamAndMjpgStreamer();
-
-        if (request.getParameter("start") != null) {
-        	streamer.start();
+		if (request.getParameter("start") != null) {
+			streamer.start();
         } else if (request.getParameter("stop") != null) {
         	streamer.stop();
         }

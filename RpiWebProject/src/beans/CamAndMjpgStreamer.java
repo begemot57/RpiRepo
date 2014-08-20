@@ -11,20 +11,23 @@ import java.io.PrintWriter;
 public class CamAndMjpgStreamer {
 	
 	private static BufferedWriter bw;
-	ProcessBuilder pb;
+	private static ProcessBuilder pb;
 	private static final String scriptDir = "/leo/git/RpiRepo/RpiJavaProject/scripts";
-	private static final String scriptName = "/cam_and_mjpg_streamer.sh";
+	private static final String scriptName = "./cam_and_mjpg_streamer.sh";
 	// out stream
 	private static PrintWriter out;
+	private static File logFile = new File("streamer.log");
 	
 	public CamAndMjpgStreamer(){
-		try {
-			out = new PrintWriter(new File("streamer.log"));
-			out.write("CamAndMjpgStreamer initialized\n");
-			out.flush();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace(out);
-			out.flush();
+		if(pb == null){
+			try {
+				out = new PrintWriter(logFile);
+				out.write("CamAndMjpgStreamer initialized\n");
+				out.flush();
+			} catch (FileNotFoundException e) {
+				e.printStackTrace(out);
+				out.flush();
+			}
 		}
 	}
 	
@@ -42,22 +45,17 @@ public class CamAndMjpgStreamer {
 	void execute(String action){
 		try {
 			if(bw == null){
-				ProcessBuilder pb = new ProcessBuilder(scriptName, action);
+				pb = new ProcessBuilder(scriptName, action);
 				pb.directory(new File(scriptDir));
 				pb.redirectErrorStream(true);
+				pb.redirectInput(logFile);
 				Process p = pb.start();
-				OutputStream out = p.getOutputStream();
-				bw = new BufferedWriter(new OutputStreamWriter(out));
+//				OutputStream pbOut = p.getOutputStream();
+//				bw = new BufferedWriter(new OutputStreamWriter(pbOut));
 			}
 		} catch (IOException e) {
 			e.printStackTrace(out);
 			out.flush();
-		} finally {
-			if (out != null) {
-				out.write("Close file\n");
-				out.flush();
-				out.close();
-			}
-		}
+		} 
 	}
 }
