@@ -1,23 +1,40 @@
 package beans;
 
 import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 
-public class CamAndMjpgStramer {
+public class CamAndMjpgStreamer {
 	
 	private static BufferedWriter bw;
 	ProcessBuilder pb;
 	private static final String script = "/leo/git/RpiRepo/RpiJavaProject/scripts/cam_and_mjpg_streamer.sh";
+	// out stream
+	private static PrintWriter out;
+	
+	public CamAndMjpgStreamer(){
+		try {
+			out = new PrintWriter(new File("streamer.log"));
+			out.write("CamAndMjpgStreamer initialized");
+			out.flush();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace(out);
+			out.flush();
+		}
+	}
 	
 	public void start() {
-		System.out.println("start pic stream and server");
+		out.write("start pic stream and server");
+		out.flush();
 		execute("start");
 	}
 	
 	public void stop(){
-		System.out.println("stop pic stream and server");
+		out.write("stop pic stream and server");
 		execute("stop");
 	}
 
@@ -31,7 +48,14 @@ public class CamAndMjpgStramer {
 				bw = new BufferedWriter(new OutputStreamWriter(out));
 			}
 		} catch (IOException e) {
-			e.printStackTrace();
+			e.printStackTrace(out);
+			out.flush();
+		} finally {
+			if (out != null) {
+				out.write("Close file");
+				out.flush();
+				out.close();
+			}
 		}
 	}
 }

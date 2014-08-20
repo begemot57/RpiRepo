@@ -1,6 +1,6 @@
 package tests;
 
-import beans.CamAndMjpgStramer;
+import beans.CamAndMjpgStreamer;
 
 public class CamAndMjpgStramerTest {
 
@@ -8,7 +8,7 @@ public class CamAndMjpgStramerTest {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		CamAndMjpgStramer streamer = new CamAndMjpgStramer();
+		CamAndMjpgStreamer streamer = new CamAndMjpgStreamer();
         streamer.start();
 	}
 

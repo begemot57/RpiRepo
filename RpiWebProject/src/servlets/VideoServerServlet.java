@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import beans.CamAndMjpgStramer;
+import beans.CamAndMjpgStreamer;
 import beans.Car;
 
 
@@ -29,7 +29,7 @@ public class VideoServerServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		CamAndMjpgStramer streamer = new CamAndMjpgStramer();
+		CamAndMjpgStreamer streamer = new CamAndMjpgStreamer();
 
         if (request.getParameter("start") != null) {
         	streamer.start();
