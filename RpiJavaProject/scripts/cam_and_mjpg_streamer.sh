@@ -3,6 +3,9 @@
 # Access this URL to see the stream: http://begemot57.ddns.net:8090/stream.html
 # To run go: ./cam_and_mjpg_streamer.sh start/stop
 
+echo "sudo su"
+sudo su
+
 function start(){
 	if [ "$(ls -A /leo/cam/picstream)" ]; then
 		echo "delete old pic.jpg"
