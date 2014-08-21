@@ -3,8 +3,7 @@
 # Access this URL to see the stream: http://begemot57.ddns.net:8090/stream.html
 # To run go: ./cam_and_mjpg_streamer.sh start/stop
 
-#[ `whoami` = root ] || exec su -c $0 root
-
+#this is needed to run script as root, otherwise tomcat7 can't execute it
 sudo su <<HERE
 
 function start(){
