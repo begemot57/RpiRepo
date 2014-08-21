@@ -98,16 +98,16 @@ public class HouseConstructionMonitor {
 					// time to take pic now,
 					// if not take a pic
 					File[] filesInFolder = todaysDir.listFiles();
-					boolean takePic = false;
+					boolean takePic = true;
 					String picHour;
 					for (File file : filesInFolder) {
-						// pic name has this format "20140815_1252" we extract
+						// pic name has this format "20140815_1252.jpg" we extract
 						// hous here
 						picHour = file.getName().substring(
 								file.getName().length() - 8,
 								file.getName().length() - 6);
 						if (picHour.equals(Integer.toString(hoursNow))) {
-							takePic = true;
+							takePic = false;
 							out.write("Pic for current hour is already present: "
 									+ file.getName() + "\n");
 							out.flush();
