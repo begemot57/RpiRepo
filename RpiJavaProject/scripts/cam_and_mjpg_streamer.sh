@@ -6,8 +6,6 @@
 echo "sudo su"
 sudo su
 
-
-
 function start(){
 	if [ "$(ls -A /leo/cam/picstream)" ]; then
 		echo "delete old pic.jpg"
