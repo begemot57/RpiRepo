@@ -3,7 +3,9 @@
 # Access this URL to see the stream: http://begemot57.ddns.net:8090/stream.html
 # To run go: ./cam_and_mjpg_streamer.sh start/stop
 
-[ `whoami` = root ] || exec su -c $0 root
+#[ `whoami` = root ] || exec su -c $0 root
+
+sudo su <<HERE
 
 function start(){
 	if [ "$(ls -A /leo/cam/picstream)" ]; then
@@ -50,3 +52,5 @@ if [ $1 == "stop" ]; then
 fi
 
 exit
+
+HERE
