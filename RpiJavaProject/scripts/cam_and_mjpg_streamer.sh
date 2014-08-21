@@ -4,7 +4,7 @@
 # To run go: ./cam_and_mjpg_streamer.sh start/stop
 
 function start(){
-	if ! ls -A /leo/cam/picstream > /dev/null; then
+	if ls -A /leo/cam/picstream > /dev/null; then
 		echo "delete old pic.jpg"
 		rm /leo/cam/picstream/*
 	fi
