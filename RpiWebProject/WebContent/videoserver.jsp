@@ -14,6 +14,8 @@
 				<td align="center">  
 					<input type="submit" name="start" value="START" style="height:150px; width:150px" />    
 				</td>
+				<td>
+				</td>
 				<td align="center">  
 				    <input type="submit" name="stop" value="STOP" style="height:150px; width:150px" />
 				</td>   
@@ -22,7 +24,7 @@
 				<td>
 				</td>		
 				<td align="center">
-					<a href="http://begemot57.ddns.net:8090/javascript.html">Go to server</a>
+					<input type="button" value="View Stream" onclick="window.open('http://begemot57.ddns.net:8090/stream_simple.html')">
 				</td>
 				<td>
 				</td>			    
