@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #this is needed to run script as root, otherwise tomcat7 can't execute it
-sudo su <<HERE
+#sudo su <<HERE
 
 path="/leo/git/RpiRepo/RpiJavaProject/bin/"
 currentlogfile=$(cd $path && ls -t * | head -1)
@@ -11,4 +11,4 @@ index=$(echo $line | grep -b -o @ | cut -d: -f1)
 echo $index
 echo ${line:0:$index}
 
-HERE
+#HERE
