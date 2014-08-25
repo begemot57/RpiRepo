@@ -1,6 +1,6 @@
 #!/bin/bash
 sudo su <<HERE
-currentlogfile=$(echo cd /leo/git/RpiRepo/RpiJavaProject/bin && ls -t *.log | head -1)
+currentlogfile=$(cd /leo/git/RpiRepo/RpiJavaProject/bin && ls -t * | head -1)
 echo $currentlogfile
 #line=$(head -n 1 $currentlogfile)
 #index=$(echo $line | grep -b -o @ | cut -d: -f1)
