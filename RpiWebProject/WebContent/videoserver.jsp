@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>JSP with the current date</title>
+<title>Video Server Control Page</title>
 </head>
 <body>
 <div align="center">
