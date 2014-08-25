@@ -70,6 +70,7 @@ public class HouseConstructionMonitor {
 			out.flush();
 			while (true) {
 				// check if current hour is working hour
+				cal = Calendar.getInstance();
 				boolean isWorkingHourNow = false;
 				int hoursNow = cal.get(Calendar.HOUR_OF_DAY);
 				for (int h : workingHours) {
@@ -84,7 +85,6 @@ public class HouseConstructionMonitor {
 
 				if (isWorkingHourNow) {
 					// check if today's pic dir is there or create one
-					cal = Calendar.getInstance();
 					String todaysDirName = dateFormat.format(cal.getTime());
 					File todaysDir = new File(picsDir + todaysDirName);
 					if (!todaysDir.exists()) {
