@@ -1,6 +1,6 @@
 #!/bin/bash
 OLDIFS=$IFS
-IFS="/"
+IFS="@"
 while read f1 f2
 do
 	echo "process id : $f1"
