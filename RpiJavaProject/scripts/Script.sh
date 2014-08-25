@@ -1,7 +1,6 @@
 #!/bin/bash
 sudo su <<HERE
-cd /leo/git/RpiRepo/RpiJavaProject/bin &
-currentlogfile=$(ls -t *.log | head -1)
+currentlogfile=$(cd /leo/git/RpiRepo/RpiJavaProject/bin & ls -t *.log | head -1)
 echo $currentlogfile
 line=$(head -n 1 Configuration.conf)
 index=$(echo $line | grep -b -o @ | cut -d: -f1)
