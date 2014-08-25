@@ -1,9 +1,4 @@
 #!/bin/bash
-OLDIFS=$IFS
-IFS="@"
-while read f1 f2
-do
-	echo "process id : $f1"
-	echo "host : $f2"
-done < file
-IFS=$OLDIFS
+line=$(head -n 1 Configuration.conf)
+echo $line | grep -b -o @ | cut -d: -f1
+echo ${line:0:4}
