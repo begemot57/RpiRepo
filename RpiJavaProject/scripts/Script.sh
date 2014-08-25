@@ -1,6 +1,6 @@
 #!/bin/bash
 
-sudo su <<HERE
+#sudo su <<HERE
 
 currentlogfile=$(cd /leo/git/RpiRepo/RpiJavaProject/bin && ls -t * | head -1)
 echo $currentlogfile
@@ -10,4 +10,4 @@ echo $currentlogfile
 #echo ${line:0:$index}
 exit
 
-HERE
+#HERE
