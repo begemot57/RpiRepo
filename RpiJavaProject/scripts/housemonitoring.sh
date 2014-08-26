@@ -8,7 +8,7 @@
 function start(){
 	echo "Starting house monitoring process"
 	path="/leo/git/RpiRepo/RpiJavaProject/bin/"
-	currentlogfile=$(sudo ls -t $path | head -1)
+	currentlogfile=$(sudo ls -t $path *.log | head -1)
 	echo "Get PID from here: "$path$currentlogfile
 	line=$(head -n 1 $path$currentlogfile)
 	index=$(echo $line | grep -b -o @ | cut -d: -f1)
@@ -26,7 +26,7 @@ function start(){
 function stop(){
 	echo "Killing house monitoring process"
 	path="/leo/git/RpiRepo/RpiJavaProject/bin/"
-	currentlogfile=$(sudo ls -t $path | head -1)
+	currentlogfile=$(sudo ls -t $path *.log | head -1)
 	echo "Get PID from here: "$path$currentlogfile
 	line=$(head -n 1 $path$currentlogfile)
 	index=$(echo $line | grep -b -o @ | cut -d: -f1)
