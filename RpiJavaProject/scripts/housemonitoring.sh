@@ -15,15 +15,13 @@ function start(){
 	echo $index
 	PID=${line:0:$index}
 	echo $PID
-	sudo su <<HERE
 	if ps -p $PID > /dev/null; then
    		echo "$PID is running, no need to start"
    	else
    		echo "no $PID running now - gonna start"	
    		cd /leo/git/RpiRepo/RpiJavaProject/bin
-		java -cp .:../lib/java-mail-1.4.jar cam.HouseConstructionMonitor &
+		sudo java -cp .:../lib/java-mail-1.4.jar cam.HouseConstructionMonitor &
 	fi
-	HERE
 }
 
 function stop(){
