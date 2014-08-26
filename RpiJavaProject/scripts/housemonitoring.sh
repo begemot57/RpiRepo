@@ -3,7 +3,7 @@
 # To run go: ./housemonitoring.sh start/stop
 
 #this is needed to run script as root, otherwise tomcat7 can't execute it
-sudo su <<HERE
+#sudo su <<HERE
 
 function start(){
 	echo "starting house monitoring process"
@@ -55,4 +55,4 @@ fi
 
 exit
 
-HERE
+#HERE
