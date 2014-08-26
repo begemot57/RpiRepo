@@ -27,7 +27,7 @@ function start(){
 function stop(){
 	echo "killing house monitoring process"
 	path="/leo/git/RpiRepo/RpiJavaProject/bin/"
-	currentlogfile=$(ls -t $path | head -1)
+	currentlogfile=$(sudo ls -t $path | head -1)
 	echo $path$currentlogfile
 	line=$(head -n 1 $path$currentlogfile)
 	index=$(echo $line | grep -b -o @ | cut -d: -f1)
@@ -36,7 +36,7 @@ function stop(){
 	echo $PID
 	if ps -p $PID > /dev/null; then
    		echo "$PID is running"
-   		kill -9 $PID
+   		sudo kill -9 $PID
    	else
    		echo "no $PID running now"	
 	fi		
