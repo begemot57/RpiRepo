@@ -66,7 +66,7 @@ public class HouseConstructionMonitor {
 					.concat(".log");
 			out = new PrintWriter(new File(log_file_name));
 			String processId = ManagementFactory.getRuntimeMXBean().getName();
-			out.write("Current process id: " + processId + "\n");
+			out.write(processId + "\n");
 			out.flush();
 			while (true) {
 				// check if current hour is working hour
