@@ -9,19 +9,20 @@ import javax.servlet.http.HttpServletResponse;
 
 import beans.CamAndMjpgStreamer;
 import beans.Car;
+import beans.HouseMonitor;
 
 
 /**
  * Servlet implementation class Servlet
  */
-@WebServlet("/VideoServerServlet")
-public class VideoServerServlet extends HttpServlet {
+@WebServlet("/HouseMonitoringServlet")
+public class HouseMonitoringServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
     /**
      * Default constructor. 
      */
-    public VideoServerServlet() {
+    public HouseMonitoringServlet() {
         // TODO Auto-generated constructor stub
     }
 
@@ -29,11 +30,11 @@ public class VideoServerServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		CamAndMjpgStreamer streamer = new CamAndMjpgStreamer();
+		HouseMonitor monitor = new HouseMonitor();
 		if (request.getParameter("start") != null) {
-			streamer.start();
+			monitor.start();
         } else if (request.getParameter("stop") != null) {
-        	streamer.stop();
+        	monitor.stop();
         }
 
         response.sendRedirect("./controllerpage.jsp");
