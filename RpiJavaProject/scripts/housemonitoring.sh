@@ -19,8 +19,8 @@ function start(){
    		echo "$PID is running, no need to start"
    	else
    		echo "no $PID running now - gonna start"	
-   		cd /leo/git/JavaRepo/JavaTestProject/bin 
-   		java -cp .:../lib/jsoup-1.7.3.jar:../lib/java-mail-1.4.jar jsoup.JSoupTest &
+   		cd /leo/git/RpiRepo/RpiJavaProject/bin
+		java -cp .:../lib/java-mail-1.4.jar cam.HouseConstructionMonitor &
 	fi
 }
 
