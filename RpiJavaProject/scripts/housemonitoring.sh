@@ -19,8 +19,10 @@ function start(){
    		echo "$PID is running, no need to start"
    	else
    		echo "no $PID running now - gonna start"	
+   		sudo su <<HERE
    		cd /leo/git/RpiRepo/RpiJavaProject/bin
 		java -cp .:../lib/java-mail-1.4.jar cam.HouseConstructionMonitor &
+		HERE
 	fi
 }
 
