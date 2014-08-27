@@ -34,10 +34,13 @@ public class VideoServerServlet extends HttpServlet {
 			streamer.start();
         } else if (request.getParameter("stop") != null) {
         	streamer.stop();
+        } else if (request.getParameter("checkstate") != null) {
+        	String state = streamer.checkState();
+        	request.setAttribute("appstate", state);
         }
-
-        response.sendRedirect("./controllerpage.jsp");
-        //request.getRequestDispatcher("/WEB-INF/index.jsp").forward(request, response);
+		
+//        response.sendRedirect("./controllerpage.jsp");
+        request.getRequestDispatcher("controllerpage.jsp").forward(request, response);
 	}
 
 	/**

@@ -16,13 +16,15 @@ public class HouseMonitor {
 	private static final String scriptName = "./housemonitor.sh";
 	// out stream
 	private static PrintWriter out;
+	private static BufferedWriter bufWriter = null;
 	private static File logFile = new File("housemonitor.log");
 	
 	public HouseMonitor(){
 		if(pb == null){
 			try {
 				out = new PrintWriter(logFile);
-				out.write("Init house moinitor object\n");
+				bufWriter = new BufferedWriter(out);
+				out.write("JavaBean: Init house moinitor object\n");
 				out.flush();
 			} catch (FileNotFoundException e) {
 				e.printStackTrace(out);
@@ -32,39 +34,33 @@ public class HouseMonitor {
 	}
 	
 	public void start() {
-		out.write("Detected Start button click\n");
+		out.write("JavaBean: Detected Start button click\n");
 		out.flush();
 		execute("start");
 	}
 	
 	public void stop(){
-		out.write("Detected Stop button click\n");
+		out.write("JavaBean: Detected Stop button click\n");
 		execute("stop");
 	}
 
 	void execute(String action){
-		BufferedWriter bufWriter = null;
 		try {
 			pb = new ProcessBuilder(scriptName, action);
 			pb.directory(new File(scriptDir));
+			out.write("JavaBean: run process: "+scriptName+" "+action+"\n");
+			out.flush();
 			pb.redirectErrorStream(true);
 			Process p = pb.start();
 			InputStream inputStream = p.getInputStream();
 			BufferedReader bufReader = new BufferedReader(new InputStreamReader(inputStream));
-			bufWriter = new BufferedWriter(out);
 			for (String line = bufReader.readLine(); line != null; line = bufReader.readLine()) {
 				bufWriter.write(line + "\n");
 			}
+			bufWriter.flush();
 		} catch (IOException e) {
 			e.printStackTrace(out);
 			out.flush();
-		} finally {
-			try {
-				bufWriter.close();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
+		} 
 	}
 }

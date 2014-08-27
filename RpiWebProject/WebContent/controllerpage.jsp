@@ -10,7 +10,17 @@
 <div align="center">
 	<h1 align="center">Video Stream Controller</h1>
 	<form action="${pageContext.request.contextPath}/VideoServerServlet" method="get">
-		<table>		 
+		<table>	
+			<tr>
+				<td align="center">  
+					<input type="submit" name="checkstate" value="Check Status" style="height:30px; width:150px" />    
+				</td>
+				<td>
+				</td>
+				<td align="center">  
+					<input type="text" value="${appstate}" />
+				</td>   
+			</tr>	 
 			<tr>
 				<td align="center">  
 					<input type="submit" name="start" value="START" style="height:150px; width:150px" />    
