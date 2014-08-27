@@ -59,7 +59,7 @@ if [ $1 == "stop" ]; then
 fi
 
 if [ $1 == "checkstate" ]; then
-	start
+	checkstate
 fi
 
 exit
