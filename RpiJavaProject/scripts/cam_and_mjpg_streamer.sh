@@ -41,7 +41,7 @@ function stop(){
 }
 
 function checkstate(){
-	if ! pidof -x raspistill > /dev/null; then
+	if [ ! pidof -x raspistill > /dev/null ] ; then
 		echo "stopped"
 	else
 		echo "running"
