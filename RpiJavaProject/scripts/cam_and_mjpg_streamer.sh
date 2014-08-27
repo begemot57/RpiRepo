@@ -1,7 +1,7 @@
 #!/bin/bash
 # This will remove old pic.jpg, start cam, and start mjpg_streamer server
 # Access this URL to see the stream: http://begemot57.ddns.net:8090/stream.html
-# To run go: ./cam_and_mjpg_streamer.sh start/stop
+# To run go: ./cam_and_mjpg_streamer.sh start/stop/checkstate
 
 #this is needed to run script as root, otherwise tomcat7 can't execute it
 sudo su <<HERE
@@ -40,6 +40,14 @@ function stop(){
 	fi
 }
 
+function checkstate(){
+	if [ pidof -x raspistill > /dev/null ] && [ pidof -x mjpg_streamer > /dev/null ]; then
+		echo "stopped"
+	else
+		echo "started"
+	fi
+}
+
 if [ $1 == "start" ]; then
 	echo "start it"
 	start
@@ -48,6 +56,10 @@ fi
 if [ $1 == "stop" ]; then
 	echo "stop it"
 	stop
+fi
+
+if [ $1 == "checkstate" ]; then
+	checkstate
 fi
 
 exit
