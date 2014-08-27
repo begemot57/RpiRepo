@@ -1,12 +1,12 @@
 #!/bin/bash
 # This will start/stop house monitoring tool.
-# To run go: ./housemonitoring.sh start/stop
+# To run go: ./housemonitor.sh start/stop
 
 #this is needed to run script as root, otherwise tomcat7 can't execute it
 #sudo su <<HERE
 
 function start(){
-	echo "Starting house monitoring process"
+	echo "Starting house monitor process"
 	path="/leo/git/RpiRepo/RpiJavaProject/bin/"
 	currentlogfile=$(sudo ls -t $path | head -1)
 	echo "Get PID from here: "$path$currentlogfile
@@ -24,7 +24,7 @@ function start(){
 }
 
 function stop(){
-	echo "Killing house monitoring process"
+	echo "Killing house monitor process"
 	path="/leo/git/RpiRepo/RpiJavaProject/bin/"
 	currentlogfile=$(sudo ls -t $path | head -1)
 	echo "Get PID from here: "$path$currentlogfile
