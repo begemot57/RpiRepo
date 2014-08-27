@@ -40,8 +40,6 @@ function stop(){
 	fi
 }
 
-
-
 if [ $1 == "start" ]; then
 	echo "start it"
 	start
@@ -52,7 +50,9 @@ if [ $1 == "stop" ]; then
 	stop
 fi
 
-
+if [ $1 == "checkstate" ]; then
+	start
+fi
 
 exit
 
