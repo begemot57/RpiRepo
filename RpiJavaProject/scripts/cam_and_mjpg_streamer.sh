@@ -40,6 +40,14 @@ function stop(){
 	fi
 }
 
+function checkstate(){
+	if [ pidof -x raspistill ] > /dev/null && [ pidof -x mjpg_streamer ] > /dev/null; then
+		echo "stopped"
+	else
+		echo "started"
+	fi
+}
+
 if [ $1 == "start" ]; then
 	echo "start it"
 	start
