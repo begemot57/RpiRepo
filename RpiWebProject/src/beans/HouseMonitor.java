@@ -11,7 +11,6 @@ import java.io.PrintWriter;
 
 public class HouseMonitor {
 	
-	private static BufferedWriter bw;
 	private static ProcessBuilder pb;
 	private static final String scriptDir = "/leo/git/RpiRepo/RpiJavaProject/scripts";
 	private static final String scriptName = "./housemonitor.sh";
@@ -46,18 +45,15 @@ public class HouseMonitor {
 	void execute(String action){
 		BufferedWriter bufWriter = null;
 		try {
-			if(bw == null){
-				pb = new ProcessBuilder(scriptName, action);
-				pb.directory(new File(scriptDir));
-				pb.redirectErrorStream(true);
-//				pb.redirectInput(logFile);
-				Process p = pb.start();
-				InputStream inputStream = p.getInputStream();
-				BufferedReader bufReader = new BufferedReader(new InputStreamReader(inputStream));
-				bufWriter = new BufferedWriter(out);
-				for (String line = bufReader.readLine(); line != null; line = bufReader.readLine()) {
-					bufWriter.write(line + "\n");
-				}
+			pb = new ProcessBuilder(scriptName, action);
+			pb.directory(new File(scriptDir));
+			pb.redirectErrorStream(true);
+			Process p = pb.start();
+			InputStream inputStream = p.getInputStream();
+			BufferedReader bufReader = new BufferedReader(new InputStreamReader(inputStream));
+			bufWriter = new BufferedWriter(out);
+			for (String line = bufReader.readLine(); line != null; line = bufReader.readLine()) {
+				bufWriter.write(line + "\n");
 			}
 		} catch (IOException e) {
 			e.printStackTrace(out);
