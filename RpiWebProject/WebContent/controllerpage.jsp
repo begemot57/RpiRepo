@@ -13,33 +13,31 @@
 		<table>	
 			<tr>
 				<td align="center">  
-					<input type="submit" name="checkstate" value="Check Status" style="height:30px; width:150px" />    
-				</td>
-				<td>
-				</td>
-				<td align="center">  
-					<input type="text" value="${appstate}" />
-				</td>   
-			</tr>	 
-			<tr>
-				<td align="center">  
 					<input type="submit" name="start" value="START" style="height:150px; width:150px" />    
 				</td>
-				<td>
+				<td align="center">
+					<table>
+						<tr>
+							<td align="center">
+								<input type="submit" name="checkstate" value="Check Status" style="height:30px; width:150px" />
+							</td>
+						</tr>
+						<tr>
+							<td align="center">
+								<input type="text" value="${appstate}" />
+							</td>
+						</tr>
+						<tr>
+							<td align="center">
+								<input type="button" value="View Stream" onclick="window.open('http://begemot57.ddns.net:8090/stream_simple.html')">
+							</td>
+						</tr>
+					</table>
 				</td>
 				<td align="center">  
 				    <input type="submit" name="stop" value="STOP" style="height:150px; width:150px" />
 				</td>   
 			</tr>
-			<tr>
-				<td>
-				</td>		
-				<td align="center">
-					<input type="button" value="View Stream" onclick="window.open('http://begemot57.ddns.net:8090/stream_simple.html')">
-				</td>
-				<td>
-				</td>			    
-			</tr>	    
 		</table>    
 	</form>
 </div>
