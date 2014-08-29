@@ -43,7 +43,7 @@ public class VideoServerServlet extends HttpServlet {
         }
 		
 //        response.sendRedirect("./controllerpage.jsp");
-        request.getRequestDispatcher("controllerpage.jsp").forward(request, response);
+		request.getRequestDispatcher("controllerpage.jsp").forward(request, response);
 	}
 
 	/**

@@ -8,7 +8,7 @@
 </head>
 <body>
 <div align="center">
-	<form action="${pageContext.request.contextPath}/VideoServerServlet" method="get">
+	<form action="${pageContext.request.contextPath}/PublicVideoServerServlet" method="get">
 		<table>	
 			<tr>
 				<td valign="top">  
