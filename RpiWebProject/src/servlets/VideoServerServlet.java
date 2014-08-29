@@ -30,13 +30,16 @@ public class VideoServerServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		CamAndMjpgStreamer streamer = new CamAndMjpgStreamer();
+		String stateVarName = "videoStreamAppState";
 		if (request.getParameter("start") != null) {
 			streamer.start();
+			request.setAttribute(stateVarName, "running");
         } else if (request.getParameter("stop") != null) {
         	streamer.stop();
+        	request.setAttribute(stateVarName, "stopped");
         } else if (request.getParameter("checkstate") != null) {
         	String state = streamer.checkState();
-        	request.setAttribute("appstate", state);
+        	request.setAttribute(stateVarName, state);
         }
 		
 //        response.sendRedirect("./controllerpage.jsp");

@@ -31,14 +31,21 @@ public class HouseMonitoringServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HouseMonitor monitor = new HouseMonitor();
+		String stateVarName = "houseMonitorAppState";
 		if (request.getParameter("start") != null) {
 			monitor.start();
+			request.setAttribute(stateVarName, "running");
         } else if (request.getParameter("stop") != null) {
         	monitor.stop();
+			request.setAttribute(stateVarName, "stopped");
+        } else if (request.getParameter("checkstate") != null) {
+        	String state = monitor.checkState();
+        	request.setAttribute(stateVarName, state);
         }
 
-        response.sendRedirect("./controllerpage.jsp");
+//        response.sendRedirect("./controllerpage.jsp");
         //request.getRequestDispatcher("/WEB-INF/index.jsp").forward(request, response);
+        request.getRequestDispatcher("controllerpage.jsp").forward(request, response);
 	}
 
 	/**

@@ -43,8 +43,15 @@ public class HouseMonitor {
 		out.write("JavaBean: Detected Stop button click\n");
 		execute("stop");
 	}
+	
+	public String checkState(){
+		out.write("JavaBean: Check state of house monitoring app\n");
+		out.flush();
+		return execute("checkstate");
+	}
 
-	void execute(String action){
+	String execute(String action){
+		String state = "";
 		try {
 			pb = new ProcessBuilder(scriptName, action);
 			pb.directory(new File(scriptDir));
@@ -55,12 +62,14 @@ public class HouseMonitor {
 			InputStream inputStream = p.getInputStream();
 			BufferedReader bufReader = new BufferedReader(new InputStreamReader(inputStream));
 			for (String line = bufReader.readLine(); line != null; line = bufReader.readLine()) {
+				state = line;
 				bufWriter.write(line + "\n");
 			}
 			bufWriter.flush();
 		} catch (IOException e) {
 			e.printStackTrace(out);
 			out.flush();
-		} 
+		}
+		return state;
 	}
 }
