@@ -12,24 +12,25 @@
 	<form action="${pageContext.request.contextPath}/VideoServerServlet" method="get">
 		<table>	
 			<tr>
-				<td align="center">  
+				<td valign="top">  
 					<input type="submit" name="start" value="START" style="height:150px; width:150px" />    
 				</td>
-				<td align="center">
+				<td align="center" >
 					<table>
 						<tr>
+							<td>
+								<input type="button" value="View Stream" onclick="window.open('http://begemot57.ddns.net:8090/stream_simple.html')" style="height:60px; width:150px" />
+							</td>
+						</tr>
+						<tr valign="bottom">
+							<td align="center">
+								<input type="text" value="${appstate}" style="height:30px; width:150px; text-align:center" />
+							</td>
+						</tr>
+						
+						<tr valign="bottom">
 							<td align="center">
 								<input type="submit" name="checkstate" value="Check Status" style="height:30px; width:150px" />
-							</td>
-						</tr>
-						<tr>
-							<td align="center">
-								<input type="text" value="${appstate}" />
-							</td>
-						</tr>
-						<tr>
-							<td align="center">
-								<input type="button" value="View Stream" onclick="window.open('http://begemot57.ddns.net:8090/stream_simple.html')">
 							</td>
 						</tr>
 					</table>
