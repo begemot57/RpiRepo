@@ -1,6 +1,7 @@
 #!/bin/bash
 # This will start/stop/checkstate donedeal monitoring tool.
 # To run go: ./donedealmonitor.sh start [optional URL]/stop/checkstate
+# Note: passing URL you need to escape all ampersands with back slash 
 
 function start(){
 	echo "Starting donedeal monitor process"
