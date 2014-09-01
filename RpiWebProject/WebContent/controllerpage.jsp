@@ -70,6 +70,40 @@
 		</table>    
 	</form>
 </div>
+<div align="center">
+	<h1 align="center">DoneDeal.ie Monitoring Controller</h1>
+	<form action="${pageContext.request.contextPath}/DoneDealMonitoringServlet" method="get">
+		<table>		    
+			<tr>
+				<td align="center">  
+					<input type="submit" name="start" value="START" style="height:150px; width:150px; background-color: #00FF00;" />    
+				</td>
+				<td align="center">
+					<table>
+						<tr>
+							<td align="center">
+								<input type="submit" name="checkstate" value="Check Status" style="height:30px; width:150px;" />
+							</td>
+						</tr>
+						<tr>
+							<td align="center">
+								<input type="text" value="${doneDealMonitorAppState}" style="height:30px; width:150px; text-align:center" />
+							</td>
+						</tr>
+					</table>
+				</td>
+				<td align="center">  
+				    <input type="submit" name="stop" value="STOP" style="height:150px; width:150px; background-color: #FF0000;" />
+				</td>   
+			</tr>
+			<tr>
+				<td colspan="3" align="center">
+					<textarea NAME="ddurl" style="height:30px; width:450px; text-align:center"></textarea>
+				</td>
+			</tr>    
+		</table>    
+	</form>
+</div>
 
 <script>
 	function onloadFct() {
