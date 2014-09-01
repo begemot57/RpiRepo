@@ -16,7 +16,12 @@ function start(){
    	else
    		echo "No process $PID is running now - gonna start new one"	
    		cd /leo/git/JavaRepo/JavaTestProject/bin
-		sudo java -cp .:../lib/jsoup-1.7.3.jar:../lib/java-mail-1.4.jar jsoup.JSoupTest &
+ 
+		if [ -n "$1" ]; then
+	    	sudo java -cp .:../lib/jsoup-1.7.3.jar:../lib/java-mail-1.4.jar jsoup.JSoupTest $1 &	
+		else
+	    	sudo java -cp .:../lib/jsoup-1.7.3.jar:../lib/java-mail-1.4.jar jsoup.JSoupTest &
+		fi 
 	fi
 }
 
@@ -52,7 +57,13 @@ function checkstate(){
 
 if [ $1 == "start" ]; then
 	echo "start it"
-	start
+	if [ -n "$2" ]; then
+    	echo "URL provided"
+    	start $2	
+	else
+    	echo "no URL provided"
+    	start
+	fi
 fi
 
 if [ $1 == "stop" ]; then
