@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import beans.CamAndMjpgStreamer;
-import beans.Car;
+import beans.CarOld;
 
 
 /**
