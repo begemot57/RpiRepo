@@ -17,6 +17,7 @@ public class CamAndMjpgStreamer {
 	// out stream
 	private static PrintWriter out = null;
 	private static BufferedWriter bufWriter = null;
+	//need to manually create this file otherwise an error is thrown
 	private static File logFile = new File("streamer.log");
 	
 	public CamAndMjpgStreamer(){

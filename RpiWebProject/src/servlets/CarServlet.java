@@ -48,7 +48,7 @@ public class CarServlet extends HttpServlet {
         	car.off();
         }
 
-        response.sendRedirect("./carcontrol.jsp");
+        response.sendRedirect("./carcontrolbuttons.jsp");
         //request.getRequestDispatcher("/WEB-INF/index.jsp").forward(request, response);
 	}
 
@@ -72,7 +72,7 @@ public class CarServlet extends HttpServlet {
         	car.off();
         }
 
-        response.sendRedirect("./indexmotion.jsp");
+        response.sendRedirect("./carcontrolmotion.jsp");
 	}
 
 }

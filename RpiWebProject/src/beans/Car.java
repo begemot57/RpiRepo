@@ -1,10 +1,15 @@
 package beans;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 
 public class Car {
 	
@@ -12,13 +17,32 @@ public class Car {
 	private static Process p;
 	private static double speed = 1;
 	
+	// out stream
+	private static PrintWriter out = null;
+	private static BufferedWriter bufWriter = null;
+	//need to manually create this file otherwise an error is thrown
+	private static File logFile = new File("carcontrol.log");
+	
 	public Car(){
+		if(out == null){
+			try {
+				out = new PrintWriter(logFile);
+				bufWriter = new BufferedWriter(out);
+				out.write("JavaBean: Init Car\n");
+				out.flush();
+			} catch (FileNotFoundException e) {
+				e.printStackTrace(out);
+				out.flush();
+			}
+		}
 		startProcess();
 	}
 	
 	private void startProcess(){
 		try {
 			if(bw == null){
+				out.write("JavaBean: Car::startProcess()\n");
+				out.flush();
 //				String file = "C:/Leo/programs/eclipse_my/workspace/MyPythonProject/package/PrintTest.py";
 //				ProcessBuilder pb = new ProcessBuilder("C:/cygwin/bin/python2.7.exe", file);
 //				pb.directory(new File("C:/Leo/programs/eclipse_my/workspace/MyPythonProject/package"));
@@ -35,10 +59,17 @@ public class Car {
 				p = pb.start();
 				OutputStream out = p.getOutputStream();
 				bw = new BufferedWriter(new OutputStreamWriter(out));
+				
+				InputStream inputStream = p.getInputStream();
+				BufferedReader bufReader = new BufferedReader(new InputStreamReader(inputStream));
+				for (String line = bufReader.readLine(); line != null; line = bufReader.readLine()) {
+					bufWriter.write(line + "\n");
+				}
+				bufWriter.flush();
 			}
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			e.printStackTrace(out);
+			out.flush();
 		}
 	}
 	
@@ -114,6 +145,8 @@ public class Car {
 	}
 	
 	private void move(String m){
+		out.write("JavaBean: Car::move("+m+")\n");
+		out.flush();
 		try {
 			bw.write(m);
 			bw.newLine();

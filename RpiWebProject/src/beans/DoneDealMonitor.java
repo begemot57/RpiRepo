@@ -17,6 +17,7 @@ public class DoneDealMonitor {
 	// out stream
 	private static PrintWriter out;
 	private static BufferedWriter bufWriter = null;
+	//need to manually create this file otherwise an error is thrown
 	private static File logFile = new File("donedealmonitor.log");
 	
 	public DoneDealMonitor(){
