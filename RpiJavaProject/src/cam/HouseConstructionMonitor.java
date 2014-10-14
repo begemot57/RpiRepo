@@ -103,8 +103,9 @@ public class HouseConstructionMonitor {
 					for (File file : filesInFolder) {
 						// pic name has this format "20140815_1252.jpg" we extract
 						// hous here
+						int startIndex = (hoursNow < 10) ? 7 : 8 ; 
 						picHour = file.getName().substring(
-								file.getName().length() - 8,
+								file.getName().length() - startIndex,
 								file.getName().length() - 6);
 						if (picHour.equals(Integer.toString(hoursNow))) {
 							takePic = false;
