@@ -63,7 +63,7 @@ public class HouseConstructionMonitor {
 	}
 
 	public void run() {
-		int[] workingHours = null;
+		int[] workingHours = summerWorkingHours;
 		try {
 			// setup out stream
 			cal = Calendar.getInstance();
@@ -74,21 +74,30 @@ public class HouseConstructionMonitor {
 			out.write(processId + "\n");
 			out.flush();
 			while (true) {
+				// check if current month is summer month
 				cal = Calendar.getInstance();
-				boolean isWorkingHourNow = false;
-				//check winter/summer time
 				int monthNow = cal.get(Calendar.MONTH);
-				if(Arrays.asList(winterMonths).contains(monthNow))
-					workingHours = winterWorkingHours;
-				else
+				boolean isSummerMonth = true;
+				for (int m : winterMonths) {
+					if (monthNow == m) {
+						isSummerMonth = false;
+					}
+				}
+				if(isSummerMonth)
 					workingHours = summerWorkingHours;
-				// check if current hour is working hour
+				else
+					workingHours = winterWorkingHours;
+				//check if current hour is working hour
+				boolean isWorkingHourNow = false;
 				int hoursNow = cal.get(Calendar.HOUR_OF_DAY);
-				if(Arrays.asList(workingHours).contains(hoursNow)){
-					isWorkingHourNow = true;
-					out.write("Current hour is working hour: " + hoursNow
-							+ "\n");
-					out.flush();
+				for (int h : workingHours) {
+					if (hoursNow == h) {
+						isWorkingHourNow = true;
+						out.write("Current hour is working hour: " + hoursNow
+								+ "\n");
+						out.flush();
+						break;
+					}
 				}
 
 				if (isWorkingHourNow) {
