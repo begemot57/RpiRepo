@@ -8,6 +8,7 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.lang.management.ManagementFactory;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Calendar;
 
 import javax.mail.MessagingException;
@@ -36,8 +37,11 @@ public class HouseConstructionMonitor {
 			"E yyyy.MM.dd 'at' HH:mm:ss");
 	private static final SimpleDateFormat numbersOnlyFormat = new SimpleDateFormat(
 			"yyyyMMdd'_'HHmm");
-	private static final int[] workingHours = new int[] { 8, 9, 10, 11, 12, 13,
-			14, 15, 16};
+	private static final int[] summerWorkingHours = new int[] { 8, 9, 10, 11, 12, 13,
+			14, 15, 16, 17, 18};
+	private static final int[] winterWorkingHours = new int[] { 8, 9, 10, 11, 12, 13,
+		14, 15, 16};
+	private static final int[] winterMonths = new int[] {9, 10, 11, 0, 1};
 
 	// SMTP info
 	private static final String host = "smtp.gmail.com";
@@ -59,6 +63,7 @@ public class HouseConstructionMonitor {
 	}
 
 	public void run() {
+		int[] workingHours = summerWorkingHours;
 		try {
 			// setup out stream
 			cal = Calendar.getInstance();
@@ -69,18 +74,19 @@ public class HouseConstructionMonitor {
 			out.write(processId + "\n");
 			out.flush();
 			while (true) {
-				// check if current hour is working hour
 				cal = Calendar.getInstance();
 				boolean isWorkingHourNow = false;
+				//check winter/summer time
+				int monthNow = cal.get(Calendar.MONTH);
+				if(Arrays.asList(winterMonths).contains(monthNow))
+					workingHours = winterWorkingHours;
+				// check if current hour is working hour
 				int hoursNow = cal.get(Calendar.HOUR_OF_DAY);
-				for (int h : workingHours) {
-					if (hoursNow == h) {
-						isWorkingHourNow = true;
-						out.write("Current hour is working hour: " + hoursNow
-								+ "\n");
-						out.flush();
-						break;
-					}
+				if(Arrays.asList(workingHours).contains(hoursNow)){
+					isWorkingHourNow = true;
+					out.write("Current hour is working hour: " + hoursNow
+							+ "\n");
+					out.flush();
 				}
 
 				if (isWorkingHourNow) {
