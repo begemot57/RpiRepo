@@ -63,7 +63,7 @@ public class HouseConstructionMonitor {
 	}
 
 	public void run() {
-		int[] workingHours = summerWorkingHours;
+		int[] workingHours = null;
 		try {
 			// setup out stream
 			cal = Calendar.getInstance();
