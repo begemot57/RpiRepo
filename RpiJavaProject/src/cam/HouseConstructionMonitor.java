@@ -80,6 +80,8 @@ public class HouseConstructionMonitor {
 				int monthNow = cal.get(Calendar.MONTH);
 				if(Arrays.asList(winterMonths).contains(monthNow))
 					workingHours = winterWorkingHours;
+				else
+					workingHours = summerWorkingHours;
 				// check if current hour is working hour
 				int hoursNow = cal.get(Calendar.HOUR_OF_DAY);
 				if(Arrays.asList(workingHours).contains(hoursNow)){
